@@ -1,4 +1,3 @@
-
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxhaRGwV4_Wpy5eI_cdQcKNYZqXn6eIcLWRQba8U-XmGRA-0Wa_v5bSxdCKJaeHFps/exec";
 
 
@@ -114,7 +113,8 @@ async function uploadImage(file) {
 
   }
 }
-
+  
+  
   function toBase64(file) {
 
   return new Promise((resolve, reject) => {
@@ -200,6 +200,11 @@ async function uploadImage(file) {
   showHome();
 }
 
+
+
+
+
+
 async function loadExpenses(){
 
   const response =
@@ -241,6 +246,7 @@ async function loadExpenses(){
       return;
     }
 
+
     const amount =
       isNaN(Number(item.amount))
         ? 0
@@ -274,6 +280,7 @@ async function loadExpenses(){
 
       daikiBalance -= daikiShare;
     }
+
 
 const imageSrc =
   item.image ||
@@ -329,6 +336,7 @@ html += `
 `;
   });
 
+
   const totalAmount = daikiTotal + kuriaTotal;
 
 
@@ -359,6 +367,7 @@ html += `
   document.getElementById("history").innerHTML = html;
 }
 
+
 function showHome(){
 
   document.getElementById("homePage")
@@ -383,6 +392,7 @@ function showAddPage(){
   document.getElementById("historyPage")
     .style.display = "none";
 }
+
 
 function showHistoryPage(){
 
@@ -438,6 +448,7 @@ async function loadMonthlyHistory(){
         ? 0
         : Number(item.kuria_share);
 
+
     if(!monthlyData[key]){
 
       monthlyData[key] = {
@@ -463,6 +474,7 @@ async function loadMonthlyHistory(){
     monthlyData[key].items.push(item);
 
   });
+
 
   let html = "";
 
@@ -558,6 +570,8 @@ html += `
     `;
   }
 
+ 
+
   document.getElementById("monthlyHistory")
     .innerHTML = html;
 }
@@ -595,6 +609,7 @@ async function uploadImage(file) {
   return json.url; // ← DriveのURL
 }
 
+
 async function submitExpense(formData, imageFile) {
   let imageUrl = "";
 
@@ -620,6 +635,7 @@ async function submitExpense(formData, imageFile) {
     })
   });
 }
+
 
 async function handleSubmit() {
   const file = document.getElementById("imageInput").files[0];
