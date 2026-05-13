@@ -9,9 +9,19 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0">
 
-  <title>
-    ふたりウォレット
-  </title>
+  <div class="app">
+
+  <!-- ホーム画面 -->
+  <div id="homePage">
+
+    <h1>PairPay</h1>
+
+    <div id="settlementCard"></div>
+
+    <div id="history"></div>
+
+  </div>
+    
 
   <link
     rel="stylesheet"
@@ -21,9 +31,98 @@
 
 <body>
 
-  <h1>
-    ふたりウォレット
-  </h1>
+
+<div class="app">
+
+  <!-- ホーム画面 -->
+  <div id="homePage">
+
+    <h1>PairPay</h1>
+
+    <div id="settlementCard"></div>
+
+    <div id="history"></div>
+
+  </div>
+
+<!-- 追加画面 -->
+<div id="addPage" style="display:none;">
+
+  <h1>支出追加</h1>
+
+  <input id="title" placeholder="店名・内容">
+
+  <input
+    id="amount"
+    type="number"
+    placeholder="金額"
+  >
+
+  <select id="payer">
+    <option value="だいき">だいき</option>
+    <option value="くりあ">くりあ</option>
+  </select>
+
+  <input
+    id="daiki_share"
+    type="number"
+    placeholder="だいき負担額"
+  >
+
+  <input
+    id="kuria_share"
+    type="number"
+    placeholder="くりあ負担額"
+  >
+
+  <textarea
+    id="memo"
+    placeholder="メモ"
+  ></textarea>
+
+<!-- 画像追加（ここが新規） -->
+  <input
+    id="imageInput"
+    type="file"
+    accept="image/*"
+  >
+
+  <!-- 保存ボタン（統合処理に変更） -->
+  <button
+    id="saveButton"
+    onclick="saveExpense()"
+  >
+    保存
+  </button>
+
+</div>
+
+  
+  <!-- 履歴画面 -->
+<div id="historyPage" style="display:none;">
+
+  <h1>履歴</h1>
+
+  <div id="monthlyHistory"></div>
+
+</div>
+
+<!-- フッター -->
+  <footer>
+
+    <button onclick="showHome()">
+      🏠 ホーム
+    </button>
+
+    <button onclick="showHistoryPage()">履歴</button>
+    
+    <button onclick="showAddPage()">
+      ➕ 追加
+    </button>
+
+  </footer>
+
+</div>
 
   <script src="script.js"></script>
 
