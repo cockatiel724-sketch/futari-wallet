@@ -23,8 +23,8 @@ async function resizeImage(file) {
           canvas.getContext("2d");
 
         // 最大サイズ
-        const maxWidth = 1200;
-        const maxHeight = 1200;
+        const maxWidth = 600;
+        const maxHeight = 600;
 
         let width = img.width;
         let height = img.height;
@@ -62,7 +62,7 @@ async function resizeImage(file) {
         const compressedBase64 =
           canvas.toDataURL(
             "image/jpeg",
-            0.7
+            0.5
           );
 
         resolve(
