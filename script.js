@@ -490,27 +490,66 @@ async function loadMonthDetail(
   const data =
     await response.json();
 
-  let total = 0;
-  let daikiTotal = 0;
-  let kuriaTotal = 0;
-  
-  let html = "";
-
   data.reverse();
 
-  data.forEach(item => {
+let total = 0;
+let daikiTotal = 0;
+let kuriaTotal = 0;
 
-    total += Number(item.amount) || 0;
+let html = "";
 
-daikiTotal +=
-  Number(item.daiki_share) || 0;
+data.forEach(item => {
 
-kuriaTotal +=
-  Number(item.kuria_share) || 0;
+  total += Number(item.amount) || 0;
 
-    const imageSrc =
-      item.image ||
-      "https://placehold.co/200x200?text=No+Image";
+  daikiTotal +=
+    Number(item.daiki_share) || 0;
+
+  kuriaTotal +=
+    Number(item.kuria_share) || 0;
+
+  const imageSrc =
+    item.image ||
+    "https://placehold.co/200x200?text=No+Image";
+
+  html += `
+
+    <details class="card">
+
+      <summary>
+
+        <div class="summary-row">
+
+          <img
+            class="expense-image"
+            src="${imageSrc}"
+            loading="lazy"
+          >
+
+          <div class="expense-main">
+
+            <div>
+              <strong>${item.title}</strong>
+            </div>
+
+            <div class="expense-date">
+              ${new Date(item.date).toLocaleDateString()}
+            </div>
+
+          </div>
+
+          <div class="expense-price">
+            ¥${item.amount}
+          </div>
+
+        </div>
+
+      </summary>
+
+    </details>
+
+  `;
+});
 
 html = `
 
@@ -535,49 +574,10 @@ html = `
   </div>
 
 ` + html;
-    
-    html += `
 
-      <details class="card">
+detail.innerHTML = html;
 
-        <summary>
-
-          <div class="summary-row">
-
-            <img
-              class="expense-image"
-              src="${imageSrc}"
-              loading="lazy"
-            >
-
-            <div class="expense-main">
-
-              <div>
-                <strong>${item.title}</strong>
-              </div>
-
-              <div class="expense-date">
-                ${new Date(item.date).toLocaleDateString()}
-              </div>
-
-            </div>
-
-            <div class="expense-price">
-              ¥${item.amount}
-            </div>
-
-          </div>
-
-        </summary>
-
-      </details>
-
-    `;
-  });
-  
-  detail.innerHTML = html;
-
-  detail.dataset.loaded = "true";
+detail.dataset.loaded = "true";
 
 }
 
