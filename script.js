@@ -200,7 +200,6 @@ async function uploadImage(file) {
   showHome();
 }
 
-}
 
 
 
