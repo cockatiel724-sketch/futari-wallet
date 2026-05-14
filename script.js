@@ -417,50 +417,97 @@ async function loadMonthlyHistory(){
   const response =
     await fetch(
       GAS_URL +
-      "?type=getMonthList"
+      "?type=getExpenses"
     );
 
-  const months =
+  const data =
     await response.json();
+
+  const monthlyData = {};
+
+  data.forEach(item => {
+
+    const d = new Date(item.date);
+
+    const year = d.getFullYear();
+
+    const month = d.getMonth() + 1;
+
+    const key = `${year}-${month}`;
+
+    if(!monthlyData[key]){
+
+      monthlyData[key] = {
+
+        year,
+        month,
+
+        total: 0,
+        daiki: 0,
+        kuria: 0
+
+      };
+    }
+
+    monthlyData[key].total +=
+      Number(item.amount) || 0;
+
+    monthlyData[key].daiki +=
+      Number(item.daiki_share) || 0;
+
+    monthlyData[key].kuria +=
+      Number(item.kuria_share) || 0;
+
+  });
 
   let html = "";
 
-  months.forEach(month => {
+  Object.values(monthlyData)
+    .reverse()
+    .forEach(item => {
 
-    const [year, monthNum] =
-      month.split("-");
+      html += `
 
-    html += `
+        <details
+          class="card"
+          ontoggle="
+            if(this.open){
+              loadMonthDetail(
+                '${item.year}',
+                '${item.month}',
+                this
+              );
+            }
+          "
+        >
 
-      <details
-        class="card"
-        ontoggle="
-          if(this.open){
-            loadMonthDetail(
-              '${year}',
-              '${monthNum}',
-              this
-            );
-          }
-        "
-      >
+          <summary>
 
-        <summary>
+            <h2>
+              ${item.year}年${item.month}月
+            </h2>
 
-          <h2>
-            ${year}年${monthNum}月
-          </h2>
+            <p>
+              合計 ¥${item.total.toLocaleString()}
+            </p>
 
-        </summary>
+            <p>
+              だいき ¥${item.daiki.toLocaleString()}
+            </p>
 
-        <div class="month-detail">
-          読み込み中...
-        </div>
+            <p>
+              くりあ ¥${item.kuria.toLocaleString()}
+            </p>
 
-      </details>
+          </summary>
 
-    `;
-  });
+          <div class="month-detail">
+          </div>
+
+        </details>
+
+      `;
+    });
 
   document.getElementById(
     "monthlyHistory"
