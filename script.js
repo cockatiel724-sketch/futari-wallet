@@ -502,7 +502,6 @@ async function loadMonthlyHistory(){
           </summary>
 
           <div class="month-detail">
-          読み込み中...
           </div>
 
         </details>
@@ -529,6 +528,8 @@ async function loadMonthDetail(
     return;
   }
 
+  detail.innerHTML = "読み込み中...";
+
   const response =
     await fetch(
       GAS_URL +
@@ -540,51 +541,70 @@ async function loadMonthDetail(
 
   data.reverse();
 
-let total = 0;
-let daikiTotal = 0;
-let kuriaTotal = 0;
+  let html = "";
 
+  data.forEach(item => {
 
-    <details class="card">
+    const imageSrc =
+      item.image ||
+      "https://placehold.co/200x200?text=No+Image";
 
-      <summary>
+    html += `
 
-        <div class="summary-row">
+      <details class="card">
 
-          <img
-            class="expense-image"
-            src="${imageSrc}"
-            loading="lazy"
-          >
+        <summary>
 
-          <div class="expense-main">
+          <div class="summary-row">
 
-            <div>
-              <strong>${item.title}</strong>
+            <img
+              class="expense-image"
+              src="${imageSrc}"
+              loading="lazy"
+            >
+
+            <div class="expense-main">
+
+              <div>
+                <strong>${item.title}</strong>
+              </div>
+
+              <div class="expense-date">
+                ${new Date(item.date).toLocaleDateString()}
+              </div>
+
             </div>
 
-            <div class="expense-date">
-              ${new Date(item.date).toLocaleDateString()}
+            <div class="expense-price">
+              ¥${item.amount}
             </div>
 
           </div>
 
-          <div class="expense-price">
-            ¥${item.amount}
-          </div>
+        </summary>
+
+        <div class="detail">
+
+          <p>${item.memo || ""}</p>
+
+          <p>
+            だいき：¥${item.daiki_share}
+          </p>
+
+          <p>
+            くりあ：¥${item.kuria_share}
+          </p>
 
         </div>
 
-      </summary>
+      </details>
 
-    </details>
+    `;
+  });
 
-  `;
-});
+  detail.innerHTML = html;
 
-detail.innerHTML = html;
-
-detail.dataset.loaded = "true";
+  detail.dataset.loaded = "true";
 
 }
 
