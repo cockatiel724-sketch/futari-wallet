@@ -208,7 +208,10 @@ async function uploadImage(file) {
 async function loadExpenses(){
 
   const response =
-  await fetch(GAS_URL + "?type=getExpenses");
+  await fetch(
+    GAS_URL +
+    "?type=getCurrentMonthExpenses"
+  );
 
   const data = await response.json();
 
