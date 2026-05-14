@@ -543,23 +543,6 @@ let total = 0;
 let daikiTotal = 0;
 let kuriaTotal = 0;
 
-let html = "";
-
-data.forEach(item => {
-
-  total += Number(item.amount) || 0;
-
-  daikiTotal +=
-    Number(item.daiki_share) || 0;
-
-  kuriaTotal +=
-    Number(item.kuria_share) || 0;
-
-  const imageSrc =
-    item.image ||
-    "https://placehold.co/200x200?text=No+Image";
-
-  html += `
 
     <details class="card">
 
@@ -597,30 +580,6 @@ data.forEach(item => {
 
   `;
 });
-
-html = `
-
-  <div class="card">
-
-    <h2>
-      ${year}年${month}月
-    </h2>
-
-    <p>
-      合計 ¥${total.toLocaleString()}
-    </p>
-
-    <p>
-      だいき ¥${daikiTotal.toLocaleString()}
-    </p>
-
-    <p>
-      くりあ ¥${kuriaTotal.toLocaleString()}
-    </p>
-
-  </div>
-
-` + html;
 
 detail.innerHTML = html;
 
