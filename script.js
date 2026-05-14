@@ -415,169 +415,137 @@ function showHistoryPage(){
 async function loadMonthlyHistory(){
 
   const response =
-  await fetch(GAS_URL + "?type=getExpenses");
+    await fetch(
+      GAS_URL +
+      "?type=getMonthList"
+    );
 
-  const data = await response.json();
-
-  data.reverse();
-
-
-  const monthlyData = {};
-
-
-  data.forEach(item => {
-
-    const date = new Date(item.date);
-
-    const year = date.getFullYear();
-
-    const month = date.getMonth() + 1;
-
-    const key = `${year}年${month}月`;
-
-
-    const amount =
-      isNaN(Number(item.amount))
-        ? 0
-        : Number(item.amount);
-
-    const daikiShare =
-      isNaN(Number(item.daiki_share))
-        ? 0
-        : Number(item.daiki_share);
-
-    const kuriaShare =
-      isNaN(Number(item.kuria_share))
-        ? 0
-        : Number(item.kuria_share);
-
-
-    if(!monthlyData[key]){
-
-      monthlyData[key] = {
-
-        total: 0,
-
-        daiki: 0,
-
-        kuria: 0,
-
-        items: []
-
-      };
-    }
-
-
-    monthlyData[key].total += amount;
-
-    monthlyData[key].daiki += daikiShare;
-
-    monthlyData[key].kuria += kuriaShare;
-
-    monthlyData[key].items.push(item);
-
-  });
-
+  const months =
+    await response.json();
 
   let html = "";
 
+  months.forEach(month => {
 
-  for(const month in monthlyData){
+    const [year, monthNum] =
+      month.split("-");
 
-    let detailHtml = "";
+    html += `
 
+      <details
+        class="card"
+        ontoggle="
+          if(this.open){
+            loadMonthDetail(
+              '${year}',
+              '${monthNum}',
+              this
+            );
+          }
+        "
+      >
 
-    monthlyData[month].items.forEach(item => {
+        <summary>
 
-      
-const imageSrc =
-  item.image ||
-  "https://placehold.co/200x200?text=No+Image";
-detailHtml += `
-  <details class="card">
+          <h2>
+            ${year}年${monthNum}月
+          </h2>
 
-    <summary>
+        </summary>
 
-      <div class="summary-row">
-
-        <img
-          class="expense-image"
-          src="${imageSrc}"
-        >
-
-        <div class="expense-main">
-
-          <div>
-            <strong>${item.title}</strong>
-          </div>
-
-          <div class="expense-date">
-            ${new Date(item.date).toLocaleDateString()}
-          </div>
-
+        <div class="month-detail">
+          読み込み中...
         </div>
 
-        <div class="expense-price">
-          ¥${item.amount}
-        </div>
-
-      </div>
-
-    </summary>
-
-    <div class="detail">
-
-      <p>${item.memo}</p>
-
-      <p>
-        だいき：¥${item.daiki_share}
-      </p>
-
-      <p>
-        くりあ：¥${item.kuria_share}
-      </p>
-
-    </div>
-
-  </details>
-
-      `;
-    });
-
-html += `
-
-  <details class="card">
-
-    <summary>
-
-      <h2>${month}</h2>
-
-      <p>
-        合計 ¥${monthlyData[month].total.toLocaleString()}
-      </p>
-
-      <p>
-        だいき ¥${monthlyData[month].daiki.toLocaleString()}
-      </p>
-
-      <p>
-        くりあ ¥${monthlyData[month].kuria.toLocaleString()}
-      </p>
-
-    </summary>
-
-    ${detailHtml}
-
-  </details>
+      </details>
 
     `;
+  });
+
+  document.getElementById(
+    "monthlyHistory"
+  ).innerHTML = html;
+
+}
+
+async function loadMonthDetail(
+  year,
+  month,
+  element
+){
+
+  const detail =
+    element.querySelector(".month-detail");
+
+  if(detail.dataset.loaded){
+    return;
   }
 
- 
+  const response =
+    await fetch(
+      GAS_URL +
+      `?type=getExpensesByMonth&year=${year}&month=${month}`
+    );
 
-  document.getElementById("monthlyHistory")
-    .innerHTML = html;
+  const data =
+    await response.json();
+
+  let html = "";
+
+  data.reverse();
+
+  data.forEach(item => {
+
+    const imageSrc =
+      item.image ||
+      "https://placehold.co/200x200?text=No+Image";
+
+    html += `
+
+      <details class="card">
+
+        <summary>
+
+          <div class="summary-row">
+
+            <img
+              class="expense-image"
+              src="${imageSrc}"
+              loading="lazy"
+            >
+
+            <div class="expense-main">
+
+              <div>
+                <strong>${item.title}</strong>
+              </div>
+
+              <div class="expense-date">
+                ${new Date(item.date).toLocaleDateString()}
+              </div>
+
+            </div>
+
+            <div class="expense-price">
+              ¥${item.amount}
+            </div>
+
+          </div>
+
+        </summary>
+
+      </details>
+
+    `;
+  });
+
+  detail.innerHTML = html;
+
+  detail.dataset.loaded = "true";
+
 }
+
+ 
 
 
 //画像アップ部分
