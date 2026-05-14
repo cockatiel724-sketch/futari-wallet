@@ -502,6 +502,7 @@ async function loadMonthlyHistory(){
           </summary>
 
           <div class="month-detail">
+          読み込み中...
           </div>
 
         </details>
