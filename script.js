@@ -512,6 +512,30 @@ kuriaTotal +=
       item.image ||
       "https://placehold.co/200x200?text=No+Image";
 
+html = `
+
+  <div class="card">
+
+    <h2>
+      ${year}年${month}月
+    </h2>
+
+    <p>
+      合計 ¥${total.toLocaleString()}
+    </p>
+
+    <p>
+      だいき ¥${daikiTotal.toLocaleString()}
+    </p>
+
+    <p>
+      くりあ ¥${kuriaTotal.toLocaleString()}
+    </p>
+
+  </div>
+
+` + html;
+    
     html += `
 
       <details class="card">
@@ -550,30 +574,6 @@ kuriaTotal +=
 
     `;
   });
-
-html = `
-
-  <div class="card">
-
-    <h2>
-      ${year}年${month}月
-    </h2>
-
-    <p>
-      合計 ¥${total.toLocaleString()}
-    </p>
-
-    <p>
-      だいき ¥${daikiTotal.toLocaleString()}
-    </p>
-
-    <p>
-      くりあ ¥${kuriaTotal.toLocaleString()}
-    </p>
-
-  </div>
-
-` + html;
   
   detail.innerHTML = html;
 
