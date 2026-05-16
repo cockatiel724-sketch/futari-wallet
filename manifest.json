@@ -1,6 +1,6 @@
 {
-  "name": "ふたりウォレット",
-  "short_name": "ふたりウォレット",
+  "name": "Pair Mate",
+  "short_name": "Pair Mate",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
