@@ -18,9 +18,9 @@ body::before{
 
   background:
     linear-gradient(
-      145deg,
-      #E9B5AC 55%,
-      #9EB0C6 55%
+      110deg,
+      #E9B5AC 50%,
+      #9EB0C6 50%
     );
 
   z-index:-1;
