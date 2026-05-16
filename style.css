@@ -4,6 +4,19 @@ body{
   padding:20px;
 }
 
+.title-area{
+  display:flex;
+  align-items:center;
+  justify-content:center; /* タイトル中央 */
+  gap:10px;
+}
+
+.app-icon{
+  width:40px;
+  height:40px;
+  border-radius:10px; /* 角丸 */
+}
+
 .app{
   background:white;
   padding:20px;
