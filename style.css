@@ -4,12 +4,15 @@ body{
   padding:20px;
 }
 
+#homePage{
+  background-color:#F5EBD8;
+}
+
 .title-area{
   display:flex;
   align-items:center;
   justify-content:center; /* タイトル中央 */
   gap:10px;
-  background-color:#fbf5ee;
 }
 
 .app-icon{
