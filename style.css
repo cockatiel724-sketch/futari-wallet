@@ -4,10 +4,6 @@ body{
   padding:20px;
 }
 
-#homePage{
-  background-color:#F5EBD8;
-}
-
 .title-area{
   display:flex;
   align-items:center;
