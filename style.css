@@ -1,14 +1,13 @@
 body{
   font-family:sans-serif;
+  min-height:100vh;
   background:
     linear-gradient(
-      140deg,
-      #E9B5AC 0%,
-      #E9B5AC 50%,
-      #9EB0C6 50%,
-      #9EB0C6 100%
+      135deg,
+      #f9bfb5 55%,
+      #a0b4ca 55%
     );
-  
+  background-attachment:fixed;
   padding:20px;
 }
 
