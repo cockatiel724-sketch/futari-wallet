@@ -1,14 +1,29 @@
 body{
   font-family:sans-serif;
-  min-height:100vh;
+  padding:20px;
+  margin:0;
+  position:relative;
+}
+
+/* 固定背景 */
+body::before{
+  content:"";
+
+  position:fixed;
+  top:0;
+  left:0;
+
+  width:100%;
+  height:100vh;
+
   background:
     linear-gradient(
       135deg,
-      #f9bfb5 55%,
-      #a0b4ca 55%
+      #E9B5AC 55%,
+      #9EB0C6 55%
     );
-  background-attachment:fixed;
-  padding:20px;
+
+  z-index:-1;
 }
 
 .title-area{
